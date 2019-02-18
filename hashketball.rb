@@ -115,6 +115,7 @@ teams = {
   }
 end
 
+
 #def num_points_scored(name)
 #  game_hash.each do |location, list|
 #    list.each do |key, description|
@@ -130,10 +131,18 @@ end
 #    list.each do |key, description|
 #      if description.include?(name)
 #        return teams[location][key][name][:shoe]
+
+
+#def num_points_scored(name)
+#  game_hash.each do |location, list|
+#    list.each do |key, description|
+#      if description.include?(name)
+#        return teams[location][key][name][:points]
 #      end
 #    end
 #  end
 #end  
+
 
 def num_points_scored(name)
   player_stats(name)[:points]
@@ -204,4 +213,78 @@ array_shoe = []
 i = array_shoe.each_with_index.max[1]
 name = array_name[i]  
 player_stats(name)[:rebounds]
+
+#def shoe_size(name)
+#  game_hash.each do |location, list|
+#    list.each do |key, description|
+#      if description.include?(name)
+#        return teams[location][key][name][:shoe]
+#      end
+#    end
+#  end
+#end  
+
+def player_stats(name)
+  game_hash.each do |location, list|
+    if list[:players].include?(name)
+      return list[:players][name]
+    end 
+  end
+end 
+
+def num_points_scored(name)
+  player_stats(name)[:points]
 end
+
+def shoe_size(name)
+  player_stats(name)[:shoe]
+end
+
+def big_shoe_rebounds
+array_name = []
+array_shoe = []
+  game_hash.each do |location, list|
+    list[:players].each do |name, stats|
+        array_name << name
+        array_shoe << stats[:shoe]      
+    end
+  end
+i = array_shoe.each_with_index.max[1]
+name = array_name[i]  
+player_stats(name)[:rebounds]
+end
+
+def team_names
+array = []
+  game_hash.each do |location, list|
+    list.each do |key, description|
+      if key == :team_name
+      array << description
+      end  
+    end
+  end
+array
+end
+
+def team_colors(team_name)
+  game_hash.each do |location, list|
+    if game_hash[location].values.include?(team_name)
+      list.each do |key, description|
+        if key == :colors
+          return description
+        end  
+      end
+    end
+  end
+end
+
+def player_number(number)
+  game_hash.each do |location, list|
+    puts game_hash[location][:players][list][:number]
+  end
+end
+
+player_number(33)
+
+    
+      
